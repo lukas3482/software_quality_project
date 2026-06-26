@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  c-build-and-test:
+    name: C Build und Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install CMake
+        run: sudo apt-get update && sudo apt-get install -y cmake
+
+      - name: Build
+        run: make build
+
+      - name: Test
+        run: cd build && ctest --output-on-failure
+
+  c-check:
+    name: C Statische Code Analyse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y cmake clang-tidy
+
+      - name: Configure (generate compile_commands.json)
+        run: cmake -S c -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Static Analysis
+        run: clang-tidy -p build --warnings-as-errors='*' c/src/calculator.c
+
+  python-test:
+    name: Python Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Test
+        run: cd python && python -m pytest tests/ -v
+
+  python-check:
+    name: Python Statische Code Analyse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Static Analysis
+        run: cd python && python -m ruff check .
