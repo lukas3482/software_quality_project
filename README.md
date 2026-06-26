@@ -1,52 +1,51 @@
 # Software Quality Project
 
-A demo project with a C library and a Python module, built and analysed via `make`.
+**Autor:** Lukas Wolf
 
-## Requirements
+---
 
-| Tool | Purpose |
-|------|---------|
-| CMake ≥ 3.14 | C build system |
-| clang-tidy | C static analysis |
-| Python ≥ 3.10 | Python runtime |
-| pip | Python package manager |
+## Make-Targets
 
-## Make targets
+| Target | Was wird ausgeführt |
+|--------|---------------------|
+| `make build` | Baut das c-Projekt |
+| `make test` | Führt die C-Unit-Tests aus |
+| `make check` | Statische Code Analyse |
+| `make clean` | Löscht den `build/`-Ordner und Python-Caches |
+| `make install-deps` | Installiert Python-Abhängigkeiten via pip |
+| `make all` | Führt `build`, `test` und `check` nacheinander aus |
 
-| Target | Description |
-|--------|-------------|
-| `make build` | Configure and build the C project with CMake |
-| `make test` | Run C unit tests (Unity via ctest) and Python tests (pytest) |
-| `make check` | Static analysis: clang-tidy for C, ruff for Python |
-| `make clean` | Remove all build artifacts |
-| `make install-deps` | Install Python dependencies from `requirements.txt` |
+---
 
-## Project structure
+## Lokales Bauen und Testen
 
-```
-.
-├── c/                      # C library (CMake + Unity)
-│   ├── CMakeLists.txt
-│   ├── include/calculator.h
-│   ├── src/calculator.c
-│   └── tests/test_calculator.c
-├── python/                 # Python module (pytest + ruff)
-│   ├── calculator.py
-│   ├── pyproject.toml
-│   └── tests/test_calculator.py
-├── .github/workflows/ci.yml
-├── .clang-tidy
-├── Makefile
-└── requirements.txt
+### Voraussetzungen
+
+- CMake ≥ 3.17
+- C-Compiler (gcc oder clang)
+- clang-tidy
+- Python ≥ 3.10 mit pip
+
+### C-Projekt bauen und testen
+
+```bash
+make build   
+make test    
+make check  
+make clean
 ```
 
-## CI (GitHub Actions)
+### Python-Tests ausführen
 
-Four jobs run on every push to `main` and every pull request:
+```bash
+make install-deps   # Abhängigkeiten installieren (einmalig)
+make test          
+make check  
+make clean
+```
 
-- **C – Build & Test**: CMake build + ctest
-- **C – Static Analysis**: clang-tidy
-- **Python – Tests**: pytest
-- **Python – Static Analysis**: ruff
+### Alles auf einmal
 
-All four must pass before a PR can be merged.
+```bash
+make all
+```
