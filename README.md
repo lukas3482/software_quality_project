@@ -21,10 +21,10 @@
 
 ### Voraussetzungen
 
-- CMake ≥ 3.17
-- C-Compiler (gcc oder clang)
+- CMake
+- C-Compiler
 - clang-tidy
-- Python ≥ 3.10 mit pip
+- Python mit pip
 
 ### C-Projekt bauen und testen
 
@@ -38,7 +38,7 @@ make clean
 ### Python-Tests ausführen
 
 ```bash
-make install-deps   # Abhängigkeiten installieren (einmalig)
+make install-deps   # Abhängigkeiten installieren (muss nur einmalig ausgeführt werden)
 make test          
 make check  
 make clean
@@ -49,5 +49,3 @@ make clean
 ```bash
 make all
 ```
-
-test für die pr
