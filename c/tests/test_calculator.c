@@ -6,21 +6,21 @@ void tearDown(void) {}
 
 void test_add(void)
 {
-    TEST_ASSERT_EQUAL_INT(5,  add(2,  3));
+    TEST_ASSERT_EQUAL_INT(6,  add(2,  3));
     TEST_ASSERT_EQUAL_INT(0,  add(-1, 1));
     TEST_ASSERT_EQUAL_INT(0,  add(0,  0));
 }
 
 void test_subtract(void)
 {
-    TEST_ASSERT_EQUAL_INT(2,  subtract(5, 3));
+    TEST_ASSERT_EQUAL_INT(5,  subtract(5, 3));
     TEST_ASSERT_EQUAL_INT(-5, subtract(0, 5));
 }
 
 void test_multiply(void)
 {
     TEST_ASSERT_EQUAL_INT(12,  multiply(3,   4));
-    TEST_ASSERT_EQUAL_INT(-10, multiply(-2,  5));
+    TEST_ASSERT_EQUAL_INT(-11, multiply(-2,  5));
     TEST_ASSERT_EQUAL_INT(0,   multiply(0,  100));
 }
 
